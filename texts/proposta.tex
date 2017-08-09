@@ -1,0 +1,55 @@
+\xchapter{Proposta}{}
+\label{proposta}
+Os desafios supracitados motivaram o desenvolvimento de uma biblioteca que detecte momentos oportunos
+e inoportunos para detecção de motoristas, utilizando apenas sensores de smartphone.
+Este capítulo aborda os principais aspectos da proposta para este projeto. As seguintes seções são apresentadas:
+Metodologia, Resultados Esperados e Cronograma.
+
+\section{Metodologia}
+\label{metodologia}
+
+\begin{enumerate}
+  \item Serão identificados momentos oportunos para interrupção de motoristas a partir da leitura de artigos
+relacionados;
+  \item Serão escolhidos os sensores de smartphone que a aplicação utilizará para coletar dados contextuais, para
+que seja possível identificar corretamente os momentos indicados no passo 1;
+  \item Um aplicativo Android será criado para coleta de dados dos sensores escolhidos no passo 2;
+  \item Será feita uma experimentação em situações reais de direção veicular, de forma a relacionar os valores indicados
+nos sensores com momentos oportunos para interrupção;
+  \item Será feita a investigação e escolha do melhor algoritmo de aprendizado de máquina para classificação dos dados,
+baseado nos dados preliminares obtidos no passo anterior. Esta investigação será feita através da ferramenta Weka
+\cite{hall2009weka};
+  \item Será feito um estudo de caso para a avaliação dos resultados utilizando o modelo obtido no passo anterior;
+\end{enumerate}
+
+\section{Resultados Esperados}
+\label{resultados}
+
+Ao final deste trabalho espera-se ter uma biblioteca que faça a predição automática de momentos oportunos para
+interrupção de motoristas. No futuro, este mecanismo poderá ser implementado na forma de uma biblioteca, podendo assim
+ser utilizada por qualquer aplicativo do sistema operacional Android.
+
+\section{Cronograma}
+\label{cronograma}
+
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|r|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{Atividade}}                                                             & \multicolumn{2}{c|}{Dezembro} & \multicolumn{2}{c|}{Janeiro} & \multicolumn{2}{c|}{Fevereiro} & \multicolumn{2}{c|}{Março} & Abril     \\ \cline{2-10}
+\multicolumn{1}{|c|}{}                                                                                       & 1ª quinz.     & 2ª quinz.     & 1ª quinz.     & 2ª quinz.    & 1ª quinz.      & 2ª quinz.     & 1ª quinz.    & 2ª quinz.   & 1ª quinz. \\ \hline
+\begin{tabular}[c]{@{}r@{}}Pesquisa de momentos oportunos\\ para interrupção de motoristas\end{tabular}      & X             &               &               &              &                &               &              &             &           \\ \hline
+\begin{tabular}[c]{@{}r@{}}Pesquisa de sensores utilizados para\\ obtenção de dados contextuais\end{tabular} & X             &               &               &              &                &               &              &             &           \\ \hline
+\begin{tabular}[c]{@{}r@{}}Elaboração da arquitetura do\\ aplicativo\end{tabular}                            &               & X             & X             &              &                &               &              &             &           \\ \hline
+\begin{tabular}[c]{@{}r@{}}Testes com sensores que serão\\ utilizados\end{tabular}                           &               &               &               & X            &                &               &              &             &           \\ \hline
+Desenvolvimento do aplicativo                                                                                &               &               & X             & X            & X              & X             &              &             &           \\ \hline
+Experimentação                                                                                               &               &               &               &              &                & X             &              &             &           \\ \hline
+\begin{tabular}[c]{@{}r@{}}Escolha do algoritmo de\\ aprendizado de máquina\end{tabular}                     &               &               &               &              &                &               & X            &             &           \\ \hline
+Estudo de caso                                                                                               &               &               &               &              &                &               & X            &             &           \\ \hline
+Escrita da monografia                                                                                        &               & X             & X             & X            & X              & X             & X            & X           &           \\ \hline
+Entrega do projeto                                                                                           &               &               &               &              &                &               &              & X           &           \\ \hline
+Defesa do PF II                                                                                              &               &               &               &              &                &               &              &             & X         \\ \hline
+\end{tabular}
+}
+\end{table}

@@ -1,0 +1,222 @@
+%% Template para dissertacao/tese na classe UFBAthesis
+%% versao 1.0
+%% (c) 2005 Paulo G. S. Fonseca
+%% (c) 2012 Antonio Terceiro
+%% (c) 2014 Christina von Flach
+%% www.dcc.ufba.br/~flach/ufbathesis
+
+%% Carrega a classe ufbathesis
+%% Opcoes: * Idiomas
+%%           pt   - portugues (padrao)
+%%           en   - ingles
+%%         * Tipo do Texto
+%%           bsc  - para monografias de graduacao
+%%           msc  - para dissertacoes de mestrado (padrao)
+%%           qual - exame de qualificacao de mestrado
+%%           prop - exame de qualificacao de doutorado
+%%           phd  - para teses de doutorado
+%%         * Media
+%%           scr  - para versao eletronica (PDF) / consulte o guia do usuario
+%%         * Estilo
+%%           classic - estilo original a la TAOCP (deprecated) - apesar de deprecated, manter esse.
+%%           std     - novo estilo a la CUP (padrao)
+%%         * Paginacao
+%%           oneside - para impressao em face unica
+%%           twoside - para impressao em frente e verso (padrao)
+
+% Atenção: Manter 'classic' na declaracao abaixo:
+\documentclass[bsc, classic, a4paper, oneside]{ufbathesis}
+
+%% Preambulo:
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{hyphenat}
+\usepackage[usenames, dvipsnames, table]{xcolor}
+\usepackage{booktabs}
+\usepackage{pifont}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{colortbl}
+\usepackage{xfrac}
+\usepackage{float}
+\usepackage[FIGTOPCAP]{subfigure}
+
+
+% Universidade
+\university{Universidade Federal da Bahia}
+
+% Endereco (cidade)
+\address{Salvador}
+
+% Instituto ou Centro Academico
+\institute{Instituto de Matemática}
+
+% Nome da biblioteca - usado na ficha catalografica
+\library{Biblioteca Reitor Macêdo Costa}
+
+% Programa de pos-graduacao
+\program{Departamento de Ciência da Computação}
+
+% Area de titulacao
+\majorfield{Sistemas de Informação}
+
+% Titulo da dissertacao
+\title{Um método sensível ao contexto para predição de momentos oportunos para interrupção de motoristas}
+
+% Data da defesa
+% e.g. \date{19 de fevereiro de 2013}
+\date{06 de agosto de 2017}
+% e.g. \defenseyear{2013}
+\defenseyear{2017}
+
+% Autor
+% e.g. \author{Jose da Silva}
+\author{José Lucas dos Santos Borges}
+
+% Orientador(a)
+% Opcao: [f] - para orientador do sexo feminino
+% e.g. \adviser[f]{Profa. Dra. Maria Santos}
+\adviser[f]{Vaninha Vieira dos Santos}
+
+% Orientador(a)
+% Opcao: [f] - para orientador do sexo feminino
+% e.g. \coadviser{Prof. Dr. Pedro Pedreira}
+% Comente se nao ha co-orientador
+% \coadviser{Rogerio de Carvalho Bastos}
+% \coadviser{Ítalo Valcy da Silva Brito}
+\coadviser{Alberto Vianna Dias da Silva}
+
+%% Inicio do documento
+\begin{document}
+
+\pgcompfrontpage
+
+%% Parte pre-textual
+\frontmatter
+
+\pgcomppresentationpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ficha catalografica
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\authorcitationname{Borges, José Lucas dos Santos} % e.g. Terceiro, Antonio Soares de Azevedo
+\advisercitationname{dos Santos, Vaninha Vieira} % e.g. Chavez, Christina von Flach Garcia
+\coadvisercitationname{da Silva, Alberto Vianna Dias}
+\catalogtype{Monografia (Graduação)} % e.g. ou ``Tese (Doutorado)''
+
+\catalogtopics{1. Contexto.}
+% Listar palavras-chave do trabalho para a FICHA CATALOGRAFICA}, por exemplo,
+% ``1. Complexidade Estrutural. 2. Qualidade de Software 3. Engenharia de Software''
+\catalogcdd{XXX.XX} % e.g.  XXX.XX (número nesse formato serah dado pela biblioteca)
+\catalogcdu{XXX.XX.XXX} % e.g.  XXX.XX.XXX (idem)
+\catalogingsheet
+
+%%%%%%%%%%%%%%%%%%%%%
+% Termo de aprovacaoo
+%%%%%%%%%%%%%%%%%%%%%
+
+\approvalsheet{Salvador, DIA de MES de ANO}{
+   \comittemember{Profa. Dra. Vaninha Vieira dos Santos}{Universidade Federal da Bahia}
+   \comittemember{Ítalo Valcy da Silva Brito}{Universidade Federal da Bahia}
+   % Para mestrado, apenas 3.
+   % \comittemember{Prof. Dr. Professor 4}{Universidade HJKL}
+   % \comittemember{Profa. Dra. Professora 5}{Universidade QWERTY}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dedicatoria, Agradecimentos, Epigrafe
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Comente para ocultar
+\begin{dedicatory}
+DIGITE A DEDICATORIA AQUI
+\end{dedicatory}
+
+% Agradecimentos
+% Se preferir, crie um arquivo `a parte e o inclua via \include{}
+\acknowledgements
+DIGITE OS AGRADECIMENTOS AQUI
+
+% Epigrafe
+\begin{epigraph}[NOTA]{AUTOR}
+DIGITE AQUI A CITACAO
+\end{epigraph}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Resumo em Portugues
+%%%%%%%%%%%%%%%%%%%%%
+
+\resumo
+\input{texts/resumo}
+
+%%%%%%%%%%%%%%%%%%%
+% Resumo em Ingles
+%%%%%%%%%%%%%%%%%%%
+
+\abstract
+\input{texts/abstract}
+
+
+%%%%%%%%%%%%%%%%%%%
+% Sumario / Indice
+%%%%%%%%%%%%%%%%%%%
+
+% Comente para ocultar
+\tableofcontents
+
+% Lista de figuras
+% Comente para ocultar
+\listoffigures
+
+% Lista de tabelas
+% Comente para ocultar
+\listoftables
+
+%% Parte textual
+\mainmatter
+
+% Eh aconselhavel criar cada capitulo em um arquivo separado, digamos
+% "capitulo1.tex", "capitulo2.tex", ... "capituloN.tex" e depois
+% inclui-los com:
+% \include{capitulo1}
+% \include{capitulo2}
+% ...
+% \include{capituloN}
+%
+% Importante:
+% Use \xchapter{}{} ao inves de \chapter{}; se não quiser colocar texto antes do inicio do capitulo, use \xchapter{texto}{}.
+
+\input{texts/introducao.tex}
+% \input{texts/interrupcao.tex}
+\input{texts/meupossante.tex}
+\input{texts/revisao_literatura.tex}
+\input{texts/proposta.tex}
+%% Parte pos-textual
+\backmatter
+
+% Bibliografia
+% É aconselhável utilizar o BibTeX a partir de um arquivo, digamos "biblio.bib".
+% Para ajuda na criação do arquivo .bib e utilização do BibTeX, recorra ao
+% BibTeXpress em www.cin.ufpe.br/~paguso/bibtexpress
+\bibliographystyle{abntex2-alf}
+\bibliography{tcc}
+
+% Apendices
+% Comente se naoo houver apendices
+% \appendix
+
+% \xchapter{Exemplo de Ap\^endice}{} %sem preambulo
+% \lipsum
+% Eh aconselhavel criar cada apendice em um arquivo separado, digamos
+% "apendice1.tex", "apendice.tex", ... "apendiceM.tex" e depois
+% inclui--los com:
+% \include{apendice1}
+% \include{apendice2}
+% ...
+% \include{apendiceM}
+
+%% Fim do documento
+\end{document}
+%------------------------------------------------------------------------------------------%
