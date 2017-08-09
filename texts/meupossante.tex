@@ -35,7 +35,7 @@ manutenção está próxima. Neste sentido surge o Meu Possante, um aplicativo q
 o estado atual do veículo e avisa o momento em que as manutenções das peças serão
 necessárias.
 
-\section{O aplicativo em linhas gerais (provisório)}
+\section{Arquitetura}
 \label{meupossante-app}
 
 O Meu Possante possui um objetivo simples: Auxiliar o motorista a identificar quais
@@ -60,15 +60,44 @@ pelo motorista enquanto está dirigindo. No momento em que detecta a iminência 
 de alguma das peças do veículo, uma notificação é enviada para o dispositivo do usuário.
 Esta notificação leva à página da peça correspondente no aplicativo, onde pode ser lido
 mais detalhes sobre o estado atual, como a quilometragem e qual a quilometragem da
-próxima troca, como pode ser visto na figura \ref{meu-possante-tela-componente}.
+próxima troca.%, como pode ser visto na figura \ref{meu-possante-tela-componente}.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.3\textwidth]{images/meu-possante-tela-componente.png}
-\caption{Tela que indica a necessidade de revisão de um componente}
-\label{meu-possante-tela-componente}
-\end{figure}
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.3\textwidth]{images/meu-possante-tela-componente.png}
+% \caption{Tela que indica a necessidade de revisão de um componente}
+% \label{meu-possante-tela-componente}
+% \end{figure}
 
 Na versão atual, o motorista precisa indicar que está dirigindo através de uma tela
 específica. Ao indicar que está dirigindo, o aplicativo começa a monitorar a localização
-do usuário e seu deslocamento
+do usuário e seu deslocamento. Durante a corrida, os dados de quilometragem são atualizados
+no banco de dados e na iminência da manutenção de uma peça, uma notificação é enviada para o
+usuário.
+
+O Meu Possante foi pensado de forma a ter uma arquitetura simples e eficiente. Na figura
+é possível ver o fluxo de dados através dos módulos, começando pela entrada de dados do GPS
+e chegando ao final com a atualização destes dados em um banco de dados e o eventual envio de
+uma notificação. As setas na imagem indicam o sentido do fluxo de dados. Os módulos utilizados
+são os seguintes:
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{images/arquitetura-meu-possante.png}
+  \caption{Arquitetura do Meu Possante}
+  \label{meu-possante-arquitetura}
+\end{figure}
+
+\begin{enumerate}
+  \item \textbf{Location Service:} Responsável pela configuração e gerenciamento do sensor de localização (GPS).
+    O monitoramento do sensor é feito através de um serviço que continua rodando no background,
+    mesmo quando o usuário não está com a aplicação aberta.
+  \item \textbf{Service Handler:} Responsável pela inicialização e checagem de dados dos serviços
+    que estão rodando na aplicação. Este módulo também é responsável por atualizar as informações
+    de quilometragem no banco de dados e notificar o usuário, caso detecte a iminência de
+    manutenção de alguma peça.
+\end{enumerate}
+
+A solução proposta no presente trabalho almeja estender o módulo Service Handler para que não notifique motoristas
+em momentos inoportunos, evitando colocá-los em potenciais riscos. A seção \ref{revisao-lit} explica com mais detalhes
+por que a notificação de motoristas em momentos inoportunos é um problema.
