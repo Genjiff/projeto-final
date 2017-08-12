@@ -1,5 +1,16 @@
-\xchapter{Uma solução para identificação de momentos oportunos e inoportunos para interrupção de motoristas}{}
+\xchapter{Uma módulo para identificação de momentos oportunos e inoportunos para interrupção de motoristas}{}
 \label{solucao}
 
-Neste trabalho apresentamos um módulo de identificaçao de momentos oportunos e inoportunos para interrupção de
-motoristas, usando apenas sensores de smartphone.
+Neste trabalho apresentamos um módulo de identificação de momentos oportunos e inoportunos para interrupção de
+motoristas, usando apenas sensores de smartphone. As seções estão estruturadas da seguinte forma: A seção
+\ref{sec-arquitetura-solucao} apresenta a arquitetura do módulo proposto.
+
+\section{Arquitetura}
+\label{sec-arquitetura-solucao}
+Segundo \citeonline{garlan1993introduction}, a arquitetura de um software é a coleção de seus componentes computacionais - ou simplesmente
+componentes - junto com a descrição das interações entre estes componentes - os conectores.  Sendo assim, nesta sessão
+vamos mostrar os principais elementos da solução proposta e como eles interagem entre si.
+
+O módulo funcionará em conjunto com o aplicativo Meu Possante, um aplicativo para sistemas Android e cuja arquitetura pode ser vista
+na seção \ref{meupossante-app}. A identificação dos momentos oportunos e inoportunos é feita usando apenas sensores de smartphone,
+mais especificamente GPS e giroscópio.

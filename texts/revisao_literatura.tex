@@ -42,6 +42,11 @@ motorista durante a direção de um veículo:
   capacidade reativa;
 \end{itemize}
 
+O estudo de \citeonline{monk2004recovering} ainda conclui que interrupções antes ou depois de uma tarefa ou sub-tarefa trazem
+menos problemas, e cita curvas, mudanças de faixa e entrada em uma rodovia como exemplos de sub-tarefas que o motorista executa.
+Este fato serve de justificativa para a escolha dos momentos inoportunos a serem detectados neste trabalho, que são a curva
+e mudança de faixa.
+
 Estima-se que o uso de celular durante o ato de dirigir um veículo aumenta o risco de acidentes em 38\% \cite{laberge2001wireless}.
 Em paralelo a este fato, \citeonline{stothart2015attentional} afirmam que apenas o ato de receber uma notificação, mesmo que ela não seja
 atendida, distrai o motorista tanto quanto receber uma ligação no celular ou responder uma mensagem de texto. Ante este fato, é
@@ -154,6 +159,11 @@ quando ele não está com nenhuma das mãos no volante ou quando está interagin
 O classificador para detecção de interruptibilidade construído obteve 94\% de precisão na detecção de momentos
 oportunos para interrupção de motoristas.
 
+O trabalho de \citeonline{kim2015sensors} também apresenta evidências de que há outros momentos oportunos para interromper motoristas, como
+por exemplo quando o carro está parado (todas as vezes em que o motorista não tinha nenhuma das mãos no volante, a velocidade do carro era menor
+do que 3 km/h), quando a velocidade do carro é baixa e quando a velocidade é constante. Estes achados servem como justificativa para a
+escolha dos momentos oportunos a serem detectados neste trabalho, que são o veículo parado e a velocidade baixa e constante.
+
 %O presente trabalho visa construir um classificador semelhante, com o diferencial de utilizar apenas sensores de smartphone.
 
 \citeonline{johnson2011driving} apresentam o MIROAD (sigla em inglês para Plataforma Móvel para Reconhecimento
@@ -199,4 +209,4 @@ interruptibilidade de trabalhadores de escritório.
 
 O presente trabalho propõe um módulo que funcionará junto a um aplicativo pré-existente com o objetivo de identificar momentos
 oportunos e inoportunos para interrupção de motoristas. O próximo capítulo apresenta mais detalhes sobre a arquitetura e
-implementação do referido módulo. 
+implementação do referido módulo.
