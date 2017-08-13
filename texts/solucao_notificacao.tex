@@ -13,4 +13,21 @@ vamos mostrar os principais elementos da solução proposta e como eles interage
 
 O módulo funcionará em conjunto com o aplicativo Meu Possante, um aplicativo para sistemas Android e cuja arquitetura pode ser vista
 na seção \ref{meupossante-app}. A identificação dos momentos oportunos e inoportunos é feita usando apenas sensores de smartphone,
-mais especificamente GPS e giroscópio.
+sendo que os momentos oportunos são medidos utilizando o sensor de GPS, enquanto os inoportunos usam o giroscópio.
+
+Os momentos escolhidos foram os seguintes:
+
+\begin{itemize}
+  \item Momentos Oportunos:
+    \begin{itemize}
+      \item Veículo parado \cite{kim2015sensors}
+      \item Velocidade constante e menor que 29,5 km/h \cite{kim2015sensors}
+    \end{itemize}
+  \item Momentos Inoportunos:
+    \begin{itemize}
+      \item Durante uma curva \cite{monk2004recovering}
+      \item Durante uma mudança de faixa \cite{monk2004recovering}
+    \end{itemize}
+\end{itemize}
+
+A arquitetura solução 
