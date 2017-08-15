@@ -1,0 +1,2 @@
+- Separar o algoritmo da detecção de curvas em uma função
+- Montar arquitetura da solução

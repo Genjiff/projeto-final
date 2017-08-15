@@ -1,55 +1,78 @@
 \xchapter{Proposta}{}
 \label{proposta}
-Os desafios supracitados motivaram o desenvolvimento de uma biblioteca que detecte momentos oportunos
-e inoportunos para detecção de motoristas, utilizando apenas sensores de smartphone.
-Este capítulo aborda os principais aspectos da proposta para este projeto. As seguintes seções são apresentadas:
-Metodologia, Resultados Esperados e Cronograma.
 
-\section{Metodologia}
-\label{metodologia}
+Neste trabalho é proposto um módulo de identificação de momentos oportunos e inoportunos para interrupção de
+motoristas, usando apenas sensores de smartphone. As seções estão estruturadas da seguinte forma: A seção
+\ref{sec-arquitetura-solucao} apresenta a arquitetura da solução proposta. A seção \ref{sec-implementacao}
+apresenta detalhes da implementação de cada módulo que compõe a solução.
+
+\section{Arquitetura}
+\label{sec-arquitetura-solucao}
+Segundo \citeonline{garlan1993introduction}, a arquitetura de um software é a coleção de seus componentes computacionais - ou simplesmente
+componentes - junto com a descrição das interações entre estes componentes - os conectores.  Sendo assim, nesta sessão
+vamos mostrar os principais elementos da solução proposta e como eles interagem entre si.
+
+O módulo funcionará em conjunto com o aplicativo Meu Possante, um aplicativo para sistemas Android e cuja arquitetura pode ser vista
+na seção \ref{meupossante-app}. A identificação dos momentos oportunos e inoportunos é feita usando apenas sensores de smartphone,
+sendo que os momentos oportunos são medidos utilizando o sensor de GPS, enquanto os inoportunos usam o giroscópio.
+
+Os momentos escolhidos foram os seguintes:
+
+\begin{itemize}
+  \item Momentos Oportunos:
+    \begin{itemize}
+      \item Veículo parado \cite{kim2015sensors}
+      \item Velocidade constante e menor que 29,5 km/h \cite{kim2015sensors}
+    \end{itemize}
+  \item Momentos Inoportunos:
+    \begin{itemize}
+      \item Durante uma curva \cite{monk2004recovering}
+      \item Durante uma mudança de faixa \cite{monk2004recovering}
+    \end{itemize}
+\end{itemize}
+
+O fluxo de dados da aplicação pode ser visto na figura x. O fluxo começa na coleta de dados do GPS e giroscópio, e termina
+na decisão de notificação ou não do usuário. As setas na imagem representam o sentido do fluxo de dados.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{images/arquitetura-meu-possante-com-modulo.png}
+\caption{Arquitetura do Meu Possante após a implementação do módulo de identificação}
+\label{arquitetura-meu-possante-com-modulo}
+\end{figure}
+
+Os módulos representados e suas funções são os seguintes:
 
 \begin{enumerate}
-  \item Serão identificados momentos oportunos para interrupção de motoristas a partir da leitura de artigos
-relacionados;
-  \item Serão escolhidos os sensores de smartphone que a aplicação utilizará para coletar dados contextuais, para
-que seja possível identificar corretamente os momentos indicados no passo 1;
-  \item Um aplicativo Android será criado para coleta de dados dos sensores escolhidos no passo 2;
-  \item Será feita uma experimentação em situações reais de direção veicular, de forma a relacionar os valores indicados
-nos sensores com momentos oportunos para interrupção;
-  \item Será feita a investigação e escolha do melhor algoritmo de aprendizado de máquina para classificação dos dados,
-baseado nos dados preliminares obtidos no passo anterior. Esta investigação será feita através da ferramenta Weka
-\cite{hall2009weka};
-  \item Será feito um estudo de caso para a avaliação dos resultados utilizando o modelo obtido no passo anterior;
+  \item \textbf{Location Service:} Responsável pela coleta e monitoramento dos dados do GPS, incluindo deslocamento, velocidade e
+  aceleração do dispositivo.
+  \item \textbf{Gyroscope Service:} Responsável pela coleta e monitoramento dos dados do giroscópio. Este serviço detecta mudanças
+  nos valores do sensor e aplica o algoritmo de detecção de curvas e mudanças de faixa.
+  \item \textbf{Service Handler} Responsável pela inicialização e checagem de dados dos serviços
+  que estão rodando na aplicação. Este módulo também é responsável por atualizar as informações
+  de quilometragem no banco de dados e chamar o módulo de notificação quando necessário.
+  \item \textbf{Notification Handler:} Responsável por consultar os serviços e decidir se deve criar uma notificação ou não naquele
+  momento.
 \end{enumerate}
 
-\section{Resultados Esperados}
-\label{resultados}
+Na próxima seção são dados mais detalhes sobre a implementação dos módulos, assim como os algoritmos utilizados.
 
-Ao final deste trabalho espera-se ter uma biblioteca que faça a predição automática de momentos oportunos para
-interrupção de motoristas. No futuro, este mecanismo poderá ser implementado na forma de uma biblioteca, podendo assim
-ser utilizada por qualquer aplicativo do sistema operacional Android.
+\section{Implementação}
+\label{sec-implementacao}
 
-\section{Cronograma}
-\label{cronograma}
+O projeto foi desenvolvido no Android Studio, o ambiente de desenvolvimento integrado (IDE) oficial para o
+codificação de aplicativos Android. A linguagem utilizada foi o Java, linguagem padrão para o desenvolvimento
+de aplicações Android.
 
-\begin{table}[h]
-\centering
-\resizebox{\textwidth}{!}{
-\begin{tabular}{|r|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{Atividade}}                                                             & \multicolumn{2}{c|}{Dezembro} & \multicolumn{2}{c|}{Janeiro} & \multicolumn{2}{c|}{Fevereiro} & \multicolumn{2}{c|}{Março} & Abril     \\ \cline{2-10}
-\multicolumn{1}{|c|}{}                                                                                       & 1ª quinz.     & 2ª quinz.     & 1ª quinz.     & 2ª quinz.    & 1ª quinz.      & 2ª quinz.     & 1ª quinz.    & 2ª quinz.   & 1ª quinz. \\ \hline
-\begin{tabular}[c]{@{}r@{}}Pesquisa de momentos oportunos\\ para interrupção de motoristas\end{tabular}      & X             &               &               &              &                &               &              &             &           \\ \hline
-\begin{tabular}[c]{@{}r@{}}Pesquisa de sensores utilizados para\\ obtenção de dados contextuais\end{tabular} & X             &               &               &              &                &               &              &             &           \\ \hline
-\begin{tabular}[c]{@{}r@{}}Elaboração da arquitetura do\\ aplicativo\end{tabular}                            &               & X             & X             &              &                &               &              &             &           \\ \hline
-\begin{tabular}[c]{@{}r@{}}Testes com sensores que serão\\ utilizados\end{tabular}                           &               &               &               & X            &                &               &              &             &           \\ \hline
-Desenvolvimento do aplicativo                                                                                &               &               & X             & X            & X              & X             &              &             &           \\ \hline
-Experimentação                                                                                               &               &               &               &              &                & X             &              &             &           \\ \hline
-\begin{tabular}[c]{@{}r@{}}Escolha do algoritmo de\\ aprendizado de máquina\end{tabular}                     &               &               &               &              &                &               & X            &             &           \\ \hline
-Estudo de caso                                                                                               &               &               &               &              &                &               & X            &             &           \\ \hline
-Escrita da monografia                                                                                        &               & X             & X             & X            & X              & X             & X            & X           &           \\ \hline
-Entrega do projeto                                                                                           &               &               &               &              &                &               &              & X           &           \\ \hline
-Defesa do PF II                                                                                              &               &               &               &              &                &               &              &             & X         \\ \hline
-\end{tabular}
-}
-\end{table}
+As próximas subseções apresentam detalhes sobre a implementação de cada módulo que compõe a solução.
+
+\subsection{Location Service}
+\label{location-service}
+
+O módulo \textit{Location Service} é o serviço responsável pela obtenção dos dados de GPS da aplicação. Os principais dados obtidos
+por este serviço são a distância percorrida desde a última leitura, a velocidade e a aceleração.
+
+Por ser necessário obter a localização do usuário em intervalos regulares, foi preciso especificar o intervalo de tempo em que a
+aplicação iria requisitar atualizações da localização. Esta configuração tem impacto direto na autonomia de bateria do dispositivo,
+pois quanto mais frequente é a requisição de dados do GPS, mais energia é gasta pelo dispositivo. O intervalo
+de tempo escolhido foi de 5000ms (5 segundos), um intervalo razoavelmente frequente e que preserva a autonomia de bateria.
