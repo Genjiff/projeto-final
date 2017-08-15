@@ -60,14 +60,20 @@ pelo motorista enquanto está dirigindo. No momento em que detecta a iminência 
 de alguma das peças do veículo, uma notificação é enviada para o dispositivo do usuário.
 Esta notificação leva à página da peça correspondente no aplicativo, onde pode ser lido
 mais detalhes sobre o estado atual, como a quilometragem e qual a quilometragem da
-próxima troca.%, como pode ser visto na figura \ref{meu-possante-tela-componente}.
+próxima troca, como pode ser visto na figura \ref{meu-possante-tela-componente}.
 
-% \begin{figure}[h]
-% \centering
-% \includegraphics[width=0.3\textwidth]{images/meu-possante-tela-componente.png}
-% \caption{Tela que indica a necessidade de revisão de um componente}
-% \label{meu-possante-tela-componente}
-% \end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.3\textwidth]{images/meu-possante-tela-componente.png}
+\caption{Tela que indica a necessidade de revisão de um componente}
+\label{meu-possante-tela-componente}
+\end{figure}
+
+Um exemplo do caso supracitado é o fluido de freio, cuja troca recomendada é a cada
+10.000 quilômetros rodados ou 1 ano, o que ocorrer primeiro. Já a troca da correia
+dentada deve ser feita a cada 50.000 quilômetros, sem limite de tempo definido. Os
+outros componentes funcionam da mesma forma, cada qual com sua quilometragem e
+tempo de troca específicos.
 
 Na versão atual, o motorista precisa indicar que está dirigindo através de uma tela
 específica. Ao indicar que está dirigindo, o aplicativo começa a monitorar a localização
@@ -78,8 +84,7 @@ usuário.
 O Meu Possante foi pensado de forma a ter uma arquitetura simples e eficiente. Na figura
 é possível ver o fluxo de dados através dos módulos, começando pela entrada de dados do GPS
 e chegando ao final com a atualização destes dados em um banco de dados e o eventual envio de
-uma notificação. As setas na imagem indicam o sentido do fluxo de dados. Os módulos utilizados
-são os seguintes:
+uma notificação. As setas na imagem indicam o sentido do fluxo de dados.
 
 \begin{figure}[h]
   \centering
@@ -87,6 +92,8 @@ são os seguintes:
   \caption{Arquitetura do Meu Possante}
   \label{meu-possante-arquitetura}
 \end{figure}
+
+Os módulos utilizados são os seguintes:
 
 \begin{enumerate}
   \item \textbf{Location Service:} Responsável pela configuração e gerenciamento do sensor de localização (GPS).

@@ -418,8 +418,8 @@ grau de \@degree\ em \@majorfield.}
     \vspace{2em}
     \begin{flushright}
       \begin{minipage}{0.5\textwidth}
-        Este \@texttype\ foi julgado adequado \`{a} obten\c{c}\~{a}o do t\'{i}tulo de \@degree\  em Ci\^{e}ncia da Computa\c{c}\~{a}o e aprovado em sua
-        forma final pelo Departamento de Ci\^{e}ncia da Computa\c{c}\~{a}o da Universidade Federal da Bahia.
+        Este\@texttype\ foi julgado adequado \`{a} obten\c{c}\~{a}o do t\'{i}tulo de \@degree\  em \@majorfield\ e aprovado em sua
+        forma final pelo \@program\ da \@university.
       \end{minipage}
     \end{flushright}
 
@@ -559,11 +559,10 @@ grau de \@degree\ em \@majorfield.}
   \vskip 45mm
   \begin{flushright}
     \begin{minipage}{0.5\textwidth}
-        Este \@texttype\
-        foi apresentado ao Departamento de
-        Ci\^{e}ncia da Computa\c{c}\~{a}o da Universidade Federal da Bahia,
+        Este\@texttype\
+        foi apresentado ao \@program\ da \@university,
         como requisito parcial para obten\c{c}\~{a}o do grau de \@degree\
-        em Ci\^{e}ncia da Computa\c{c}\~{a}o.
+        em \@majorfield.
     \end{minipage}
   \end{flushright}
   \begin{center}
