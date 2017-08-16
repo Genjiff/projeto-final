@@ -173,13 +173,9 @@ Os três estados do algoritmo são os seguintes:
   ocorreram seguidamente, o que caracteriza uma mudança de faixa. Caso contrário, significa que apenas uma alteração válida ocorreu, o que caracteriza uma curva.
 \end{itemize}
 
-Na solução proposta pelo presente trabalho, utilizando o algoritmo de \citeonline{chen2015invisible} para detectar os momentos inoportunos de notificação: curva
+A solução proposta pelo presente trabalho utiliza o algoritmo de \citeonline{chen2015invisible} para detectar os momentos inoportunos de notificação: curva
 e mudança de faixa. O método \lstinline[basicstyle=\ttfamily\color{black}]|isAbleToNotify()| é o responsável por informar ao módulo \textit{Notification Handler}
 se o momento atual é oportuno ou não.
-
-% falar dos momentos inoportunos
-
-%
 
 \subsection{Service Handler}
 \label{service-handler}
