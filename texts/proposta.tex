@@ -48,7 +48,7 @@ Os módulos representados e suas funções são os seguintes:
   aceleração do dispositivo.
   \item \textbf{Gyroscope Service:} Responsável pela coleta e monitoramento dos dados do giroscópio. Este serviço detecta mudanças
   nos valores do sensor e aplica o algoritmo de detecção de curvas e mudanças de faixa.
-  \item \textbf{Service Handler} Responsável pela inicialização e checagem de dados dos serviços
+  \item \textbf{Service Handler:} Responsável pela inicialização e checagem de dados dos serviços
   que estão rodando na aplicação. Este módulo também é responsável por atualizar as informações
   de quilometragem no banco de dados e chamar o módulo de notificação quando necessário.
   \item \textbf{Notification Handler:} Responsável por consultar os serviços e decidir se deve criar uma notificação ou não naquele
@@ -70,17 +70,116 @@ As próximas subseções apresentam detalhes sobre a implementação de cada mó
 \label{location-service}
 
 O módulo \textit{Location Service} é o serviço responsável pela obtenção dos dados de GPS da aplicação. Os principais dados obtidos
-por este serviço são a distância percorrida desde a última leitura, a velocidade e a aceleração.
+por este serviço são a distância percorrida desde a última leitura, o valor da velocidade e a aceleração. Esta última é necessária
+apenas para determinar se a velocidade é constante ou não.
 
-Por ser necessário obter a localização do usuário em intervalos regulares, foi preciso especificar o intervalo de tempo em que a
-aplicação iria requisitar atualizações da localização. Esta configuração tem impacto direto na autonomia de bateria do dispositivo,
+Por ser necessário obter a localização do usuário em intervalos regulares, foi preciso especificar o intervalo de tempo em que o
+serviço iria requisitar atualizações da localização. Esta configuração tem impacto direto na autonomia de bateria do dispositivo,
 pois quanto mais frequente é a requisição de dados do GPS, mais energia é gasta pelo dispositivo. O intervalo de tempo escolhido
 foi de 5000ms (5 segundos), um intervalo razoavelmente frequente e que preserva a autonomia de bateria.
 
-Este módulo 
+A distância percorrida é um dado necessário para o Meu Possante calcular a quilometragem percorrida pelo veículo até o momento e
+sinalizar as trocas de peças quando necessário. Já os valores de velocidade e aceleração são necessários para determinar se um
+momento é oportuno ou inoportuno para notificar um motorista. A relação entre os momentos e os dados que são usados para
+identificá-los estão relacionados na tabela \ref{tabela-momentos-dados}:
+
+\begin{table}[h]
+\centering
+\caption{Relação entre momentos oportunos e dados necessários para identificá-los}
+\label{tabela-momentos-dados}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Momento}                              & \textbf{Dado do serviço utilizado} \\ \hline
+Veículo parado                                & Velocidade                         \\ \hline
+Velocidade constante e menor do que 29,5 km/h & Velocidade e aceleração            \\ \hline
+\end{tabular}
+\end{table}
+
+Mais informações sobre os referidos momentos podem ser lidas na seção \ref{sec-arquitetura-solucao}.
+
+Dois métodos importantes deste módulo são o \lstinline[basicstyle=\ttfamily\color{black}]|isAccelerating()|, que retorna um valor
+booleano que julga se o veículo está acelerando ou não, e o método \lstinline[basicstyle=\ttfamily\color{black}]|getLastSpeed()|, que
+retorna a última velocidade medida do veículo. Estes dois métodos são utilizados pelo módulo \textit{Notification Handler} para decidir se
+a notificação pode ser disparada ou não.
+
+Os valores de velocidade e distância percorrida são dados por métodos padrões da API Location, a API padrão para se trabalhar
+com dados de geo-referenciamento em Android. Entretanto, não há um método padrão nesta API para medir a aceleração, e por este
+motivo foi necessária a criação de um método para calculá-la. O método foi estruturado da seguinte forma:
+
+\begin{enumerate}
+  \item As últimas 5 leituras de velocidade são sempre guardadas;
+  \item Verifica-se a variação de velocidade entre elas;
+  \item Caso a variação entre uma leitura e sua subsequente seja menor do que 5 km/h mais o desvio padrão das leituras em questão,
+  considera-se que a velocidade é constante naquele momento.
+\end{enumerate}
+
+Caso a aceleração seja constante e a velocidade seja menor que 29,5 km/h, significa que o momento é oportuno para notificar o motorista
 
 \subsection{Gyroscope Service}
 \label{gyroscope-service}
+
+Este serviço é o responsável pela obtenção dos dados de giroscópio. Este é o módulo mais complexo desta proposta, por ser o responsável por
+detectar se o veículo está fazendo uma curva ou mudança de faixa usando apenas os dados do giroscópio. O algoritmo usado para identificar
+estes dois momentos inoportunos foi desenvolvido por \citeonline{chen2015invisible} e adaptado para este trabalho.
+
+\citeonline{chen2015invisible} relatam em seu trabalho que quando um carro muda de direção (ex: ao mudar de faixa, fazer uma curva ou passar
+por rodovias sinuosas), o eixo Z do giroscópio pode ser usado para representar a velocidade angular do veículo para aquela mudança de direção.
+Eles também perceberam que o padrão das leituras deste eixo se repete para determinadas atividades, como curvas e mudanças de faixa, como pode
+ser visto na figura \ref{leituras-giroscopio}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{images/leituras-giroscopio.png}
+\caption{Leituras do giroscópio quando o veículo faz uma curva à direita/esquerda ou mudança de faixa à direita/esquerda \cite{chen2015invisible}}
+\label{leituras-giroscopio}
+\end{figure}
+
+Pode-se observar na figura \ref{leituras-giroscopio} que as curvas são caracterizadas por uma alteração nas leituras, sendo esta positiva ou negativa,
+a depender do sentido da curva; enquanto que a mudança de faixa caracteriza-se por duas alterações sequenciais, sendo a segunda no sentido inverso
+da primeira.
+
+Observando estes padrões, \citeonline{chen2015invisible} desenvolveram um conjunto de regras que determina se a alteração nas leituras do eixo Z do
+giroscópio pode ser considerada um indicador de curva ou mudança de faixa. As regras são as seguintes:
+
+\begin{enumerate}
+  \item Todas as leituras durante a alteração devem ser maiores que $\delta_{s}$;
+  \item O maior valor registrado durante a alteração deve ser maior do que $\delta_{h}$;
+  \item A duração de uma alteração não deve ser menor do que $T_{BUMP}$.
+\end{enumerate}
+
+Através de testes e experimentos, os valores ideais encontrados por \citeonline{chen2015invisible} para as variáveis acima foram de $\delta_{s}$ = 0.05 rad/s,
+$\delta_{h}$ = 0.07 rad/s e $T_{BUMP}$ = 1.5 segundos.
+
+Considerando estas regras para o que é considerada uma alteração válida, \citeonline{chen2015invisible} desenvolveram um algoritmo baseado em mudança de estados
+que tenta identificar quando o veículo está fazendo uma curva ou mudança de faixa. O algoritmo está representado na figura \ref{algoritmo-giroscopio}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{images/algoritmo-giroscopio.png}
+  \caption{Algoritmo de detecção de curvas e mudanças de faixa \cite{chen2015invisible}}
+  \label{algoritmo-giroscopio}
+\end{figure}
+
+Os três estados do algoritmo são os seguintes:
+
+\begin{itemize}
+  \item \textbf{No-Bump:} Neste estado, nenhuma alteração foi detectada até o momento. Caso o valor do giroscópio passe de $\delta_{s}$, a alteração começa a ser
+  monitorada e o estado passa a ser \textit{One Bump};
+  \item \textbf{One-Bump:} Este estado começa quando o valor do giroscópio passa de $\delta_{s}$ e termina quando o valor volta a ser menor do que $\delta_{s}$.
+  Caso as três regras definidas para uma alteração ser válida forem satisfeitas, o estado passa a ser \textit{Waiting-for-Bump}, caso contrário o estado volta
+  a ser \textit{No-Bump}.
+  \item \textbf{Waiting-for-Bump:} Este estado sucede o de \textit{One-Bump} e monitora as leituras do valor do giroscópio por um tempo de 3 segundos. Caso
+  uma outra alteração comece durante esse intervalo de tempo, a alteração começa a ser monitorada. Caso ela seja válida, significa que duas alterações válidas
+  ocorreram seguidamente, o que caracteriza uma mudança de faixa. Caso contrário, significa que apenas uma alteração válida ocorreu, o que caracteriza uma curva.
+\end{itemize}
+
+Na solução proposta pelo presente trabalho, utilizando o algoritmo de \citeonline{chen2015invisible} para detectar os momentos inoportunos de notificação: curva
+e mudança de faixa. O método \lstinline[basicstyle=\ttfamily\color{black}]|isAbleToNotify()| é o responsável por informar ao módulo \textit{Notification Handler}
+se o momento atual é oportuno ou não.
+
+% falar dos momentos inoportunos
+
+%
 
 \subsection{Service Handler}
 \label{service-handler}
