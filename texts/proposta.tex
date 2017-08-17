@@ -2,9 +2,49 @@
 \label{proposta}
 
 Neste trabalho é proposto um módulo de identificação de momentos oportunos e inoportunos para interrupção de
-motoristas, usando apenas sensores de smartphone. As seções estão estruturadas da seguinte forma: A seção
-\ref{sec-arquitetura-solucao} apresenta a arquitetura da solução proposta. A seção \ref{sec-implementacao}
+motoristas, usando apenas sensores de smartphone. As seções deste capítulo estão estruturadas da seguinte forma:
+A seção \ref{sec-arquitetura-solucao} apresenta a arquitetura da solução proposta. A seção \ref{sec-implementacao}
 apresenta detalhes da implementação de cada módulo que compõe a solução.
+
+\section{Momentos oportunos e inoportunos escolhidos}
+\label{sec-momentos-oportunos-inoportunos}
+
+Para a escolha dos momentos oportunos e inoportunos foi feita uma prospecção dos artigos existentes nessa área.
+Nesta etapa dois artigos se mostraram promissores: O de \citeonline{kim2015sensors} e o de \citeonline{monk2004recovering}.
+Ambos trabalhos citam momentos oportunos e inoportunos para detecção da interruptibilidade de motoristas.
+
+\subsection{Momentos oportunos}
+\label{subsec-momentos-oportunos}
+
+\citeonline{kim2015sensors} desenvolveram um classificador utilizando aprendizagem de máquina para detectar a interruptibilidade
+de motoristas em um dado momento. O resultado do trabalho mostrou que interrupções têm menos impacto em um motorista quando ele
+não está com nenhuma das mãos no volante ou quando está interagindo com um periférico (controlador do ar condicionado, por exemplo).
+
+Além disso, pode-se inferir a partir do trabalho de \citeonline{kim2015sensors} alguns outros momentos que são oportunos para
+interromper motoristas, como por exemplo quando o carro está parado (todas as vezes em que o motorista não tinha nenhuma das
+mãos no volante, a velocidade do carro era menor do que 3 km/h), quando a velocidade do veículo é baixa (durante a interação com
+periféricos a velocidade do carro reduzia para cerca de 29,5 km/h) e quando a velocidade é constante.
+
+Com base nestes achados, foi decidido que os momentos oportunos a serem detectados neste trabalho são:
+
+\begin{itemize}
+  \item Veículo parado;
+  \item Veículo com velocidade menor do que 29,5 km/h e constante (sem aceleração ou desaceleração).
+\end{itemize}
+
+\subsection{Momentos inoportunos}
+\label{subsec-momentos-inoportunos}
+
+\citeonline{monk2004recovering} estudaram o efeito das interrupções e as distrações que elas causam nos motoristas. Eles concluem
+em seu estudo que interrupções antes ou depois de uma tarefa ou sub-tarefa trazem menos problemas, e cita curvas, mudanças
+de faixa e entrada em uma rodovia como exemplos de sub-tarefas que o motorista executa.
+
+Com base nestas afirmações, os seguintes momentos inoportunos foram escolhidos para serem detectados no presente trabalho:
+
+\begin{itemize}
+  \item Curva;
+  \item Mudança de faixa.
+\end{itemize}
 
 \section{Arquitetura}
 \label{sec-arquitetura-solucao}
@@ -16,27 +56,13 @@ O módulo funcionará em conjunto com o aplicativo Meu Possante, um aplicativo p
 na seção \ref{meupossante-app}. A identificação dos momentos oportunos e inoportunos é feita usando apenas sensores de smartphone,
 sendo que os momentos oportunos são medidos utilizando o sensor de GPS, enquanto os inoportunos usam o giroscópio.
 
-Os momentos escolhidos foram os seguintes:
-
-\begin{itemize}
-  \item Momentos Oportunos:
-    \begin{itemize}
-      \item Veículo parado \cite{kim2015sensors}
-      \item Velocidade constante e menor que 29,5 km/h \cite{kim2015sensors}
-    \end{itemize}
-  \item Momentos Inoportunos:
-    \begin{itemize}
-      \item Durante uma curva \cite{monk2004recovering}
-      \item Durante uma mudança de faixa \cite{monk2004recovering}
-    \end{itemize}
-\end{itemize}
-
-O fluxo de dados da aplicação pode ser visto na figura x. O fluxo começa na coleta de dados do GPS e giroscópio, e termina
-na decisão de notificação ou não do usuário. As setas na imagem representam o sentido do fluxo de dados.
+O fluxo de dados da aplicação pode ser visto na figura \ref{arquitetura-meu-possante-com-modulo}. O fluxo começa
+na coleta de dados do GPS e giroscópio, e termina na decisão de notificação ou não do usuário. As setas na
+imagem representam o sentido do fluxo de dados.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth]{images/arquitetura-meu-possante-com-modulo.png}
+\includegraphics[width=0.8\textwidth]{images/arquitetura-meu-possante-com-modulo.png}
 \caption{Arquitetura do Meu Possante após a implementação do módulo de identificação}
 \label{arquitetura-meu-possante-com-modulo}
 \end{figure}
@@ -60,7 +86,7 @@ Na próxima seção são dados mais detalhes sobre a implementação dos módulo
 \section{Implementação}
 \label{sec-implementacao}
 
-O projeto foi desenvolvido no Android Studio, o ambiente de desenvolvimento integrado (IDE) oficial para o
+O projeto foi desenvolvido no Android Studio, o ambiente de desenvolvimento integrado (IDE) oficial para
 codificação de aplicativos Android. A linguagem utilizada foi o Java, linguagem padrão para o desenvolvimento
 de aplicações Android.
 
@@ -69,19 +95,19 @@ As próximas subseções apresentam detalhes sobre a implementação de cada mó
 \subsection{Location Service}
 \label{location-service}
 
-O módulo \textit{Location Service} é o serviço responsável pela obtenção dos dados de GPS da aplicação. Os principais dados obtidos
+O módulo \textit{Location Service} é o serviço responsável pela obtenção dos dados de GPS da aplicação. Os principais dados calculados
 por este serviço são a distância percorrida desde a última leitura, o valor da velocidade e a aceleração. Esta última é necessária
 apenas para determinar se a velocidade é constante ou não.
 
-Por ser necessário obter a localização do usuário em intervalos regulares, foi preciso especificar o intervalo de tempo em que o
-serviço iria requisitar atualizações da localização. Esta configuração tem impacto direto na autonomia de bateria do dispositivo,
+Por ser necessário obter a localização do usuário em intervalos regulares, foi preciso especificar o intervalo de tempo que o
+serviço requisita atualizações da localização. Esta configuração tem impacto direto na autonomia de bateria do dispositivo,
 pois quanto mais frequente é a requisição de dados do GPS, mais energia é gasta pelo dispositivo. O intervalo de tempo escolhido
 foi de 5000ms (5 segundos), um intervalo razoavelmente frequente e que preserva a autonomia de bateria.
 
 A distância percorrida é um dado necessário para o Meu Possante calcular a quilometragem percorrida pelo veículo até o momento e
 sinalizar as trocas de peças quando necessário. Já os valores de velocidade e aceleração são necessários para determinar se um
 momento é oportuno ou inoportuno para notificar um motorista. A relação entre os momentos e os dados que são usados para
-identificá-los estão relacionados na tabela \ref{tabela-momentos-dados}:
+identificá-los estão relacionados na tabela \ref{tabela-momentos-dados}.
 
 \begin{table}[h]
 \centering
@@ -89,13 +115,13 @@ identificá-los estão relacionados na tabela \ref{tabela-momentos-dados}:
 \label{tabela-momentos-dados}
 \begin{tabular}{|c|c|}
 \hline
-\textbf{Momento}                              & \textbf{Dado do serviço utilizado} \\ \hline
+\textbf{Momento oportuno}                     & \textbf{Dado do serviço utilizado} \\ \hline
 Veículo parado                                & Velocidade                         \\ \hline
 Velocidade constante e menor do que 29,5 km/h & Velocidade e aceleração            \\ \hline
 \end{tabular}
 \end{table}
 
-Mais informações sobre os referidos momentos podem ser lidas na seção \ref{sec-arquitetura-solucao}.
+Mais informações sobre os referidos momentos podem ser lidas na seção \ref{sec-momentos-oportunos-inoportunos}.
 
 Dois métodos importantes deste módulo são o \lstinline[basicstyle=\ttfamily\color{black}]|isAccelerating()|, que retorna um valor
 booleano que julga se o veículo está acelerando ou não, e o método \lstinline[basicstyle=\ttfamily\color{black}]|getLastSpeed()|, que
@@ -155,7 +181,7 @@ que tenta identificar quando o veículo está fazendo uma curva ou mudança de f
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.5\textwidth]{images/algoritmo-giroscopio.png}
+  \includegraphics[width=0.45\textwidth]{images/algoritmo-giroscopio.png}
   \caption{Algoritmo de detecção de curvas e mudanças de faixa \cite{chen2015invisible}}
   \label{algoritmo-giroscopio}
 \end{figure}
