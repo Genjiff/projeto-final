@@ -3,6 +3,7 @@
 
 Neste trabalho é proposto um módulo de identificação de momentos oportunos e inoportunos para interrupção de
 motoristas, usando apenas sensores de smartphone. As seções deste capítulo estão estruturadas da seguinte forma:
+A seção \ref{sec-momentos-oportunos-inoportunos} discorre sobre os momentos oportunos e inoportunos escolhidos.
 A seção \ref{sec-arquitetura-solucao} apresenta a arquitetura da solução proposta. A seção \ref{sec-implementacao}
 apresenta detalhes da implementação de cada módulo que compõe a solução.
 
@@ -35,9 +36,10 @@ Com base nestes achados, foi decidido que os momentos oportunos a serem detectad
 \subsection{Momentos inoportunos}
 \label{subsec-momentos-inoportunos}
 
-\citeonline{monk2004recovering} estudaram o efeito das interrupções e as distrações que elas causam nos motoristas. Eles concluem
-em seu estudo que interrupções antes ou depois de uma tarefa ou sub-tarefa trazem menos problemas, e cita curvas, mudanças
-de faixa e entrada em uma rodovia como exemplos de sub-tarefas que o motorista executa.
+\citeonline{monk2004recovering} estudaram o efeito das interrupções e as distrações que elas causam nos motoristas.
+Eles concluem em seu estudo que interrupções durante uma tarefa ou sub-tarefa trazem problemas, e cita curvas, mudanças
+de faixa e entrada em uma rodovia como exemplos de sub-tarefas que o motorista executa. Logo, não é indicado notificar
+um motorista durante estas atividades.
 
 Com base nestas afirmações, os seguintes momentos inoportunos foram escolhidos para serem detectados no presente trabalho:
 
@@ -62,7 +64,7 @@ imagem representam o sentido do fluxo de dados.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.8\textwidth]{images/arquitetura-meu-possante-com-modulo.png}
+\includegraphics[width=0.85\textwidth]{images/arquitetura-meu-possante-com-modulo.png}
 \caption{Arquitetura do Meu Possante após a implementação do módulo de identificação}
 \label{arquitetura-meu-possante-com-modulo}
 \end{figure}
@@ -139,7 +141,7 @@ motivo foi necessária a criação de um método para calculá-la. O método foi
   considera-se que a velocidade é constante naquele momento.
 \end{enumerate}
 
-Caso a aceleração seja constante e a velocidade seja menor que 29,5 km/h, significa que o momento é oportuno para notificar o motorista
+Caso a aceleração seja constante e a velocidade seja menor que 29,5 km/h, significa que o momento é oportuno para notificar o motorista.
 
 \subsection{Gyroscope Service}
 \label{gyroscope-service}
@@ -205,6 +207,8 @@ se o momento atual é oportuno ou não.
 
 \subsection{Service Handler}
 \label{service-handler}
+
+
 
 \subsection{Notification Handler}
 \label{notification-handler}
