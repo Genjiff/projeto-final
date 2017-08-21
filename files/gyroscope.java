@@ -67,53 +67,21 @@ public class Gyroscope extends IntentService implements SensorEventListener {
             founddeltaH = true;
         }
         if (state == "no-bump" && gyroValue > deltas) {
+            // Inicio da primeira alteracao
             timestart = currentTimeMillis() / 1000.0;
-            if (ableToNotify) {
-                GyroscopeDataVO gyroData = new GyroscopeDataVO();
-                SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
-                String date = sdfDate.format(timestart * 1000.0);
-
-                gyroData.setTime(date);
-                gyroData.setAbleToNotify("Nao");
-                gyroData.setMoment("Inicio de curva");
-                gyroDAO.insert(gyroData);
-            }
             state = "one-bump";
             founddeltaH = false;
             ableToNotify = false;
-            //fReadingView.setText(String.valueOf(timestart));
         } else if ((state == "one-bump" || state == "second-bump") && gyroValue < deltas) {
             timeend = currentTimeMillis() / 1000.0;
-            //sReadingView.setText(String.valueOf(timeend));
-            //diffView.setText(String.valueOf(timeend - timestart));
             if (timeend - timestart > tbump && founddeltaH) {
                 if (state == "one-bump") {
-                    //gyroTextView.append("Waiting Bump\n");
-                    if (ableToNotify) {
-                        GyroscopeDataVO gyroData = new GyroscopeDataVO();
-                        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
-                        String date = sdfDate.format(timeend * 1000.0);
-
-                        gyroData.setTime(date);
-                        gyroData.setAbleToNotify("Nao");
-                        gyroData.setMoment("Esperando pelo inicio da mudanca de faixa");
-                        gyroDAO.insert(gyroData);
-                    }
+                    // Fim da primeira alteracao. Aguardando outra alteracao.
                     state = "waiting-bump";
                     timestart = currentTimeMillis() / 1000.0;
                     ableToNotify = false;
                 } else {
-                    //gyroTextView.append("Lane Change\n");
-                    if (!ableToNotify) {
-                        GyroscopeDataVO gyroData = new GyroscopeDataVO();
-                        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
-                        String date = sdfDate.format(timeend * 1000.0);
-
-                        gyroData.setTime(date);
-                        gyroData.setAbleToNotify("Sim");
-                        gyroData.setMoment("Fim da mudanca de faixa");
-                        gyroDAO.insert(gyroData);
-                    }
+                    // Fim da segunda alteracao. Detectou mudanca de faixa.
                     state = "no-bump";
                     timestart = 0;
                     timeend = 0;
@@ -121,29 +89,9 @@ public class Gyroscope extends IntentService implements SensorEventListener {
                 }
             } else {
                 if (state == "one-bump") {
-                    //gyroTextView.append("No Turn\n");
-                    if (!ableToNotify) {
-                        GyroscopeDataVO gyroData = new GyroscopeDataVO();
-                        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
-                        String date = sdfDate.format(timeend * 1000.0);
-
-                        gyroData.setTime(date);
-                        gyroData.setAbleToNotify("Sim");
-                        gyroData.setMoment("Nao houve curva");
-                        gyroDAO.insert(gyroData);
-                    }
+                    // Nao houve alteracao. Volta ao estado inicial.
                 } else {
-                    //gyroTextView.append("Turn\n");
-                    if (!ableToNotify) {
-                        GyroscopeDataVO gyroData = new GyroscopeDataVO();
-                        SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
-                        String date = sdfDate.format(timeend * 1000.0);
-
-                        gyroData.setTime(date);
-                        gyroData.setAbleToNotify("Sim");
-                        gyroData.setMoment("Fim da curva");
-                        gyroDAO.insert(gyroData);
-                    }
+                    // Segunda alteracao foi invalida. Detectou curva.
                 }
                 state = "no-bump";
                 timestart = 0;
@@ -153,32 +101,14 @@ public class Gyroscope extends IntentService implements SensorEventListener {
         } else if (state == "waiting-bump") {
             timeend = currentTimeMillis() / 1000.0;
             if (timeend - timestart < tnextdelay && gyroValue > deltas) {
-                GyroscopeDataVO gyroData = new GyroscopeDataVO();
-                SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
-                String date = sdfDate.format(timeend * 1000.0);
-
-                gyroData.setTime(date);
-                gyroData.setAbleToNotify("Nao");
-                gyroData.setMoment("Inicio da mudanca de faixa");
-                gyroDAO.insert(gyroData);
+                // Inicio da segunda alteracao. Possivel mudanca de faixa.
                 state = "second-bump";
                 timestart = currentTimeMillis() / 1000.0;
                 timeend = 0;
                 founddeltaH = false;
                 ableToNotify = false;
-                //fReadingView.setText(String.valueOf(timestart));
             } else if (timeend - timestart > tnextdelay) {
-                //gyroTextView.append("Turn\n");
-                if (!ableToNotify) {
-                    GyroscopeDataVO gyroData = new GyroscopeDataVO();
-                    SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
-                    String date = sdfDate.format(timeend * 1000.0);
-
-                    gyroData.setTime(date);
-                    gyroData.setAbleToNotify("Nao");
-                    gyroData.setMoment("Fim da Curva");
-                    gyroDAO.insert(gyroData);
-                }
+                // Nao houve segunda alteracao. Detectou curva.
                 state = "no-bump";
                 timestart = 0;
                 timeend = 0;
