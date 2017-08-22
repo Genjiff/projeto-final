@@ -10,21 +10,58 @@ capítulo estão organizadas da seguinte forma: A seção x lorem ipsum.
 
 O desempenho da proposta foi avaliado a partir de um experimento executado durante
 situações reais de direção em um percurso em algumas ruas da cidade de Salvador -
-Bahia. O percurso está apresentado na figura \ref{percurso}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.53\textwidth]{images/percurso.png}
-\caption{Percurso realizado no experimento de avaliação}
-\label{percurso}
-\end{figure}
-
-O trajeto é composto de 5 curvas à direita, 3 curvas à esquerda e 2 lugares com mudança de faixa.
-O experimento foi realizado com 3 voluntários, todos dirigindo em seu próprio carro.
+Bahia.
 
 O smartphone escolhido para realizar o experimento foi um OnePlus One com as seguintes características
 \cite{oneplusone}:
 
-\begin{enumerate}
-  \item Sistema Operacional: Cyanogen OS 13.1.2 (Android Marshmallow 6.0.1)
-\end{enumerate}
+\begin{itemize}
+  \item Sistema Operacional: Cyanogen OS 13.1.2 (Android Marshmallow 6.0.1);
+  \item CPU: Quad-Core 2.5 GHz Qualcomm Snapdragon 801;
+  \item Memória RAM: 3 GB;
+  \item Capacidade de armazenamento: 64 GB.
+\end{itemize}
+
+Para a realização do experimento foi criado no aplicativo Meu Possante uma tela com 4 botões, que serviu
+para a identificação manual de cada momento. A tela pode ser vista na figura \ref{tela-experimento}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.3\textwidth]{images/tela-experimento.png}
+\caption{Tela utilizada para auxiliar na identificação manual do momentos oportunos e inoportunos.}
+\label{tela-experimento}
+\end{figure}
+
+Durante o experimento, ao passar por uma curva, por exemplo, o avaliador pressionava o botão
+referente à curva e informações do estado atual dos sensores eram guardadas em uma tabela no banco de dados.
+Além disso, cada vez que o sistema detectava um momento oportuno ou inoportuno, um log sobre o
+momento era guardado em outra tabela. Este log foi importante para a verificação dos falsos positivos.
+
+O trajeto percorrido pelos participantes tinha 2,6 km de distância e era composto de 5 curvas à direita,
+3 curvas à esquerda, 2 lugares com mudança de faixa e 3 semáforos. O experimento foi realizado com 3
+voluntários, todos dirigindo em seu próprio carro. O percurso está apresentado na figura \ref{percurso} e os
+indivíduos participantes do experimento estão listados na tabela \ref{participantes}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.53\textwidth]{images/percurso.png}
+\caption{Percurso realizado no experimento de avaliação.}
+\label{percurso}
+\end{figure}
+
+\begin{table}[h]
+\centering
+\caption{Indivíduos participantes do experimento}
+\label{participantes}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Indivíduo} & \textbf{Idade} & \textbf{Sexo} & \textbf{Carro utilizado} \\ \hline
+Indivíduo 1        & 22             & Masculino     & Fiat Bravo               \\ \hline
+Indivíduo 2        & 24             & Masculino     & Chevrolet Corsa          \\ \hline
+Indivíduo 3        & 26             & Masculino     & Honda Fit                \\ \hline
+\end{tabular}
+\end{table}
+
+Antes do início do experimento os participantes foram instruídos a dirigirem por todo o trajeto com
+velocidade constante de 25 km/h. Esta instrução juntamente com os elemento do trajeto permitiu que todos
+os momentos, oportunos e inoportunos, fossem avaliados durante o experimento.
