@@ -85,7 +85,7 @@
 \RequirePackage[colorlinks=true,
   urlcolor=blue,
   linkcolor=blue,
-  citecolor=black,
+  citecolor=blue,
   filecolor=blue,
   raiselinks=false]{hyperref}
 \RequirePackage{amsmath,amsfonts,amssymb,amsthm}

@@ -22,7 +22,7 @@ O smartphone escolhido para realizar o experimento foi um OnePlus One com as seg
   \item Capacidade de armazenamento: 64 GB.
 \end{itemize}
 
-Para a realização do experimento foi criado no aplicativo Meu Possante uma tela com 4 botões, que serviu
+Para a realização do experimento foi criado no aplicativo Meu Possante uma tela com 5 botões, que serviu
 para a identificação manual de cada momento. A tela pode ser vista na figura \ref{tela-experimento}.
 
 \begin{figure}[h]
@@ -36,6 +36,8 @@ Durante o experimento, ao passar por uma curva, por exemplo, o avaliador pressio
 referente à curva e informações do estado atual dos sensores eram guardadas em uma tabela no banco de dados.
 Além disso, cada vez que o sistema detectava um momento oportuno ou inoportuno, um log sobre o
 momento era guardado em outra tabela. Este log foi importante para a verificação dos falsos positivos.
+O botão referente a nenhum momento foi importante para a detecção dos verdadeiros negativos utilizados
+no cálculo da acurácia. A seção \ref{metricas} discorre sobre isso.
 
 O trajeto percorrido pelos participantes tinha 2,6 km de distância e era composto de 5 curvas à direita,
 3 curvas à esquerda, 2 lugares com mudança de faixa e 3 semáforos. O experimento foi realizado com 3
@@ -62,6 +64,30 @@ Indivíduo 3        & 26             & Masculino     & Honda Fit                
 \end{tabular}
 \end{table}
 
-Antes do início do experimento os participantes foram instruídos a dirigirem por todo o trajeto com
+Antes do início do experimento os participantes foram instruídos a dirigir por todo o trajeto com
 velocidade constante de 25 km/h. Esta instrução juntamente com os elemento do trajeto permitiu que todos
 os momentos, oportunos e inoportunos, fossem avaliados durante o experimento.
+
+\section{Métricas de avaliação}
+\label{metricas}
+
+Para analisar o desempenho do sistema foi utilizada a métrica de acurácia. A acurácia é expressa pela
+fórmula \ref{formula-acuracia}.
+
+\begin{equation}
+  Acur\acute{a}cia = \frac{TP + TN}{TP + FP + TN + FN}
+\label{formula-acuracia}
+\end{equation}
+
+As variáveis da fórmula são as seguintes:
+
+\begin{itemize}
+  \item \textbf{TP:} True Positive (Verdadeiro Positivo em inglês). No experimento é dada pelo número de
+  momentos identificados corretamente.
+  \item \textbf{FP:} False Positive (Falso Positivo em inglês). No âmbito do experimento representa os
+  momentos identificados erroneamente, ou seja, que não ocorreram mas que foram identificados pelo sistema.
+  \item \textbf{TN:} True Negative (Verdadeiro Negativo em inglês). Representa os momentos que não ocorreram
+  e que não foram identificados pelo sistema.
+  \item \textbf{FN:} False Negative (Falso Negativo em inglês). Representa os momentos que ocorreram mas
+  que não foram reconhecidos pelo sistema.
+\end{itemize}
