@@ -1,2 +1,4 @@
-- Separar o algoritmo da detecção de curvas em uma função
-- Montar arquitetura da solução
+- Terminar de escrever a proposta
+- Falar sobre contexto
+- Colocar seção do meu possante depois
+- Colocar uma tabela de momentos oportunos e inoportunos
