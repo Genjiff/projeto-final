@@ -3,7 +3,10 @@
 
 Este capítulo apresenta o processo de avaliação utilizado para medir a precisão do
 sistema de identificação de momentos oportunos e inoportunos proposto. As seções deste
-capítulo estão organizadas da seguinte forma: A seção x lorem ipsum.
+capítulo estão organizadas da seguinte forma: A seção \ref{metodologia} apresenta a metodologia
+utilizada para avaliar o sistema proposto. A seção \ref{metricas} discorre sobre as métricas
+utilizadas na avaliação. A seção \ref{resultados} apresenta os resultados do experimento de
+avaliação.
 
 \section{Metodologia}
 \label{metodologia}
@@ -33,20 +36,20 @@ para a identificação manual de cada momento. A tela pode ser vista na figura \
 \end{figure}
 
 Durante o experimento, ao passar por uma curva, por exemplo, o avaliador pressionava o botão
-referente à curva e informações do estado atual dos sensores eram guardadas em uma tabela no banco de dados.
+referente à curva, e informações do estado atual dos sensores eram guardadas em uma tabela no banco de dados.
 Além disso, cada vez que o sistema detectava um momento oportuno ou inoportuno, um log sobre o
 momento era guardado em outra tabela. Este log foi importante para a verificação dos falsos positivos.
 O botão referente a nenhum momento foi importante para a detecção dos verdadeiros negativos utilizados
-no cálculo da acurácia. A seção \ref{metricas} discorre sobre isso.
+no cálculo da acurácia. A seção \ref{metricas} discorre sobre isto.
 
 O trajeto percorrido pelos participantes tinha 2,6 km de distância e era composto de 5 curvas à direita,
 3 curvas à esquerda, 2 lugares com mudança de faixa e 3 semáforos. O experimento foi realizado com 3
-voluntários, todos dirigindo em seu próprio carro. O percurso está apresentado na figura \ref{percurso} e os
+voluntários, todos dirigindo seu próprio carro. O percurso está apresentado na figura \ref{percurso} e os
 indivíduos participantes do experimento estão listados na tabela \ref{participantes}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.53\textwidth]{images/percurso.png}
+\includegraphics[width=0.42\textwidth]{images/percurso.png}
 \caption{Percurso realizado no experimento de avaliação.}
 \label{percurso}
 \end{figure}
@@ -65,8 +68,8 @@ Indivíduo 3        & 26             & Masculino     & Honda Fit                
 \end{table}
 
 Antes do início do experimento os participantes foram instruídos a dirigir por todo o trajeto com
-velocidade constante de 25 km/h. Esta instrução juntamente com os elemento do trajeto permitiu que todos
-os momentos, oportunos e inoportunos, fossem avaliados durante o experimento.
+velocidade constante de 25 km/h. Esta instrução, juntamente com os demais elementos do trajeto,
+permitiu que todos os momentos, oportunos e inoportunos, fossem avaliados durante o experimento.
 
 \section{Métricas de avaliação}
 \label{metricas}
@@ -85,9 +88,13 @@ As variáveis da fórmula são as seguintes:
   \item \textbf{TP:} True Positive (Verdadeiro Positivo em inglês). No experimento é dada pelo número de
   momentos identificados corretamente.
   \item \textbf{FP:} False Positive (Falso Positivo em inglês). No âmbito do experimento representa os
-  momentos identificados erroneamente, ou seja, que não ocorreram mas que foram identificados pelo sistema.
+  momentos identificados erroneamente, ou seja, um momento que o sistema identificou mas que não ocorreu
+  realmente.
   \item \textbf{TN:} True Negative (Verdadeiro Negativo em inglês). Representa os momentos que não ocorreram
   e que não foram identificados pelo sistema.
   \item \textbf{FN:} False Negative (Falso Negativo em inglês). Representa os momentos que ocorreram mas
   que não foram reconhecidos pelo sistema.
 \end{itemize}
+
+\section{Resultados}
+\label{resultados}
