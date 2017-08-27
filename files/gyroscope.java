@@ -15,9 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import lucas.com.meupossante.DAO.GyroscopeDataDAO;
-import lucas.com.meupossante.VO.GyroscopeDataVO;
-
 import static java.lang.Math.abs;
 import static java.lang.System.currentTimeMillis;
 
@@ -25,7 +22,7 @@ import static java.lang.System.currentTimeMillis;
  * Created by Lucas on 31/07/2017.
  */
 
-public class Gyroscope extends IntentService implements SensorEventListener {
+public class GyroscopeService extends IntentService implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor mSensor;
     private Boolean founddeltaH = false;
@@ -44,8 +41,8 @@ public class Gyroscope extends IntentService implements SensorEventListener {
     private float gyro_timestamp = 0;
     public Queue<Float> gyroQueue;
 
-    public Gyroscope() {
-        super("Gyroscope");
+    public GyroscopeService() {
+        super("GyroscopeService");
     }
 
     public static boolean isAbleToNotify() {
@@ -60,7 +57,6 @@ public class Gyroscope extends IntentService implements SensorEventListener {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
-        gyroDAO = new GyroscopeDataDAO(this);
         gyroQueue = new LinkedList<>();
     }
 
@@ -96,7 +92,7 @@ public class Gyroscope extends IntentService implements SensorEventListener {
 
         gyroValue = average(gyroQueue);
 
-        Log.i(TAG, "Valor do giroscópio: " + String.valueOf(gyroValue));
+        Log.i(TAG, "Valor do giroscopio: " + String.valueOf(gyroValue));
         if (gyroValue > deltah) {
             founddeltaH = true;
         }

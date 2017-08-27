@@ -1,18 +1,33 @@
 \xchapter{Proposta}{}
 \label{proposta}
 
-Neste trabalho é proposto um módulo de identificação de momentos oportunos e inoportunos para interrupção de
-motoristas, usando apenas sensores de smartphone. As seções deste capítulo estão estruturadas da seguinte forma:
-A seção \ref{sec-momentos-oportunos-inoportunos} discorre sobre os momentos oportunos e inoportunos escolhidos.
-A seção \ref{sec-arquitetura-solucao} apresenta a arquitetura da solução proposta. A seção \ref{sec-implementacao}
-apresenta detalhes da implementação de cada módulo que compõe a solução.
+Neste trabalho é proposto um sistema de notificação sensível ao contexto com identificação de momentos oportunos e
+inoportunos para interrupção de motoristas, usando apenas sensores de smartphone. As seções deste capítulo estão
+estruturadas da seguinte forma: A seção \ref{sec-momentos-oportunos-inoportunos} discorre sobre os momentos oportunos
+e inoportunos escolhidos. A seção \ref{sec-arquitetura-solucao} apresenta a arquitetura da solução proposta. A
+seção \ref{sec-implementacao} apresenta detalhes da implementação de cada módulo que compõe a solução.
 
 \section{Momentos oportunos e inoportunos escolhidos}
 \label{sec-momentos-oportunos-inoportunos}
 
-Para a escolha dos momentos oportunos e inoportunos foi feita uma prospecção dos artigos existentes nessa área.
-Nesta etapa dois artigos se mostraram promissores: O de \citeonline{kim2015sensors} e o de \citeonline{monk2004recovering}.
-Ambos trabalhos citam momentos oportunos e inoportunos para detecção da interruptibilidade de motoristas.
+Para a escolha dos momentos oportunos e inoportunos que a proposta iria identificar, foi feita uma prospecção dos artigos
+existentes nessa área. Nesta etapa dois artigos se mostraram promissores: O de \citeonline{kim2015sensors} e o
+de \citeonline{monk2004recovering}. Ambos trabalhos citam momentos oportunos e inoportunos para detecção da interruptibilidade
+de motoristas. Os momentos escolhidos estão exibidos na tabela \ref{tabela-momentos-oportunos-inoportunos}.
+
+\begin{table}[h]
+\centering
+\caption{Momentos oportunos e inoportunos escolhidos para identificação na proposta}
+\label{tabela-momentos-oportunos-inoportunos}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Momentos oportunos}                                                & \textbf{Momentos Inoportunos} \\ \hline
+Veículo parado                                                             & Curva                         \\ \hline
+\begin{tabular}[c]{@{}c@{}}Veículo com velocidade\\ constante\end{tabular} & Mudança de faixa              \\ \hline
+\end{tabular}
+\end{table}
+
+As próximas subseções explicam com detalhes o porquê das escolhas destes momentos.
 
 \subsection{Momentos oportunos}
 \label{subsec-momentos-oportunos}
@@ -92,7 +107,7 @@ O projeto foi desenvolvido no Android Studio, o ambiente de desenvolvimento inte
 codificação de aplicativos Android. A linguagem utilizada foi o Java, linguagem padrão para o desenvolvimento
 de aplicações Android.
 
-As próximas subseções apresentam detalhes sobre a implementação de cada módulo que compõe a solução.
+As próximas subseções apresentam detalhes sobre a implementação dos principais módulos que compõem o sistema.
 
 \subsection{Location Service}
 \label{location-service}
@@ -204,11 +219,3 @@ Os três estados do algoritmo são os seguintes:
 A solução proposta pelo presente trabalho utiliza o algoritmo de \citeonline{chen2015invisible} para detectar os momentos inoportunos de notificação: curva
 e mudança de faixa. O método \lstinline[basicstyle=\ttfamily\color{black}]|isAbleToNotify()| é o responsável por informar ao módulo \textit{Notification Handler}
 se o momento atual é oportuno ou não.
-
-\subsection{Service Handler}
-\label{service-handler}
-
-
-
-\subsection{Notification Handler}
-\label{notification-handler}
