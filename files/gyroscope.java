@@ -1,3 +1,30 @@
+package lucas.com.meupossante;
+
+import android.app.IntentService;
+import android.content.Context;
+import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.support.v4.content.LocalBroadcastManager;
+import android.text.format.DateFormat;
+import android.util.Log;
+
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import lucas.com.meupossante.DAO.GyroscopeDataDAO;
+import lucas.com.meupossante.VO.GyroscopeDataVO;
+
+import static java.lang.Math.abs;
+import static java.lang.System.currentTimeMillis;
+
+/**
+ * Created by Lucas on 31/07/2017.
+ */
+
 public class Gyroscope extends IntentService implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor mSensor;
@@ -10,11 +37,12 @@ public class Gyroscope extends IntentService implements SensorEventListener {
     private float tbump = 1.5f;
     private float tnextdelay = 3.0f;
     public float gyroValue;
-    private GyroscopeDataDAO gyroDAO;
     private static final String TAG = "Gyroscope-Service";
     public static boolean ableToNotify = true;
     public float last_gyro_reading = 0f;
     public static final float kFilteringFactor = 0.1f;
+    private float gyro_timestamp = 0;
+    public Queue<Float> gyroQueue;
 
     public Gyroscope() {
         super("Gyroscope");
@@ -33,11 +61,13 @@ public class Gyroscope extends IntentService implements SensorEventListener {
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
         gyroDAO = new GyroscopeDataDAO(this);
+        gyroQueue = new LinkedList<>();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mSensorManager.registerListener(this, mSensor, 50000);
+        mSensorManager.registerListener(this, mSensor, 850);
+
         Log.i(TAG, "start command");
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
@@ -58,11 +88,15 @@ public class Gyroscope extends IntentService implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        //high-pass filter to eliminate gravity
-        last_gyro_reading = event.values[2] * kFilteringFactor + last_gyro_reading * (1.0f - kFilteringFactor);
-        gyroValue = abs(event.values[2] - last_gyro_reading);
+        // Moving average filter
+        if (gyroQueue.size() >= 60) {
+            gyroQueue.poll();
+        }
+        gyroQueue.add(event.values[2]);
 
-        Log.i(TAG, "Valor do giroscopio: " + String.valueOf(gyroValue));
+        gyroValue = average(gyroQueue);
+
+        Log.i(TAG, "Valor do giroscópio: " + String.valueOf(gyroValue));
         if (gyroValue > deltah) {
             founddeltaH = true;
         }
@@ -122,5 +156,15 @@ public class Gyroscope extends IntentService implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public float average(Queue<Float> queue) {
+        float average, sum = 0f;
+
+        for(float element : queue){
+            sum += element;
+        }
+        average = sum / queue.size();
+        return average;
     }
 }
