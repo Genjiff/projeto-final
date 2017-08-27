@@ -1,2 +1,26 @@
 \xchapter{Conclusão}{}
 \label{conclusao}
+
+A interrupção de motoristas através de notificações no celular é um problema
+real. O presente trabalho propôs a construção de um sistema de notificação sensível ao
+contexto com identificação de momentos oportunos e inoportunos para interrupção de
+motoristas, com o objetivo de mitigar os efeitos das interrupções inoportunas a uma
+pessoa em situação de direção.
+
+As maiores dificuldades encontradas foram a implementação do algoritmo de detecção
+de curvas e mudanças de faixa e o tratamento dos ruídos de leitura do giroscópio.
+Várias iterações foram necessárias até que o filtro de ruídos atingisse um nível
+satisfatório.
+
+O sistema desenvolvido obteve uma acurácia total de 89,37\% na identificação dos momentos
+oportunos e inoportunos, utilizando apenas os sensores de giroscópio e GPS presentes
+nos smartphones. Para trabalhos futuros existem as seguintes oportunidades:
+
+\begin{enumerate}
+  \item Pesquisa e implementação de mais momentos oportunos e inoportunos;
+  \item Fazer um experimento em outras situações de direção (Rodovias, estradas irregulares);
+  \item Otimizar os limiares de mudanças de faixa para melhorar a acurácia;
+  \item Realizar experimentos em um ambiente mais controlado para investigar mais a fundo
+  a acurácia do momento de velocidade constante;
+  \item E por fim, criar uma biblioteca para que outros aplicativos possam utilizar o sistema.
+\end{enumerate}

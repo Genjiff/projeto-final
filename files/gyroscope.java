@@ -59,8 +59,8 @@ public class Gyroscope extends IntentService implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         //high-pass filter to eliminate gravity
-        last_gyro_reading = event.values[1] * kFilteringFactor + last_gyro_reading * (1.0f - kFilteringFactor);
-        gyroValue = abs(event.values[1] - last_gyro_reading);
+        last_gyro_reading = event.values[2] * kFilteringFactor + last_gyro_reading * (1.0f - kFilteringFactor);
+        gyroValue = abs(event.values[2] - last_gyro_reading);
 
         Log.i(TAG, "Valor do giroscopio: " + String.valueOf(gyroValue));
         if (gyroValue > deltah) {

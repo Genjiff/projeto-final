@@ -373,7 +373,7 @@ grau de \@degree\ em \@majorfield.}
         \@advisertitle: Prof.~Dr. \@adviser.
         \par
         \if\@showcoadviser1
-          \@coadvisertitle: Prof.~Dr. \@coadviser.
+          \@coadvisertitle: Prof. \@coadviser.
         \fi
         \par
         \@catalogtype \, -- \@university, \@institute,

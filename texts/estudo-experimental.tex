@@ -61,9 +61,9 @@ indivíduos participantes do experimento estão listados na tabela \ref{particip
 \begin{tabular}{|c|c|c|c|}
 \hline
 \textbf{Indivíduo} & \textbf{Idade} & \textbf{Sexo} & \textbf{Carro utilizado} \\ \hline
-Indivíduo 1        & 22             & Masculino     & Fiat Bravo               \\ \hline
-Indivíduo 2        & 24             & Masculino     & Chevrolet Corsa          \\ \hline
-Indivíduo 3        & 26             & Masculino     & Honda Fit                \\ \hline
+Indivíduo 1        & 30             & Masculino     & Nissan Sentra            \\ \hline
+Indivíduo 2        & 28             & Masculino     & Toyota Etios             \\ \hline
+Indivíduo 3        & 24             & Feminino      & Chevrolet Prisma         \\ \hline
 \end{tabular}
 \end{table}
 
@@ -98,3 +98,40 @@ As variáveis da fórmula são as seguintes:
 
 \section{Resultados}
 \label{resultados}
+
+Durante o experimento descrito na seção \ref{metodologia} foram coletadas a seguinte quantidade de amostras para cada momento:
+
+\begin{itemize}
+  \item Curva: 98 amostras;
+  \item Mudança de faixa: 29 amostras;
+  \item Veículo parado: 27 amostras;
+  \item Velocidade constante: 43 amostras;
+  \item Nenhum momento: 26 amostras.
+\end{itemize}
+
+A tabela \ref{tabela-resultados} mostra os resultados do experimento de identificação de momentos oportunos e inoportunos.
+
+\begin{table}[h]
+\centering
+\caption{Resultados do experimento de identificação dos momentos}
+\label{tabela-resultados}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{} & \multicolumn{2}{c|}{\textbf{Momentos Inoportunos}} & \multicolumn{2}{c|}{\textbf{Momentos Oportunos}}        \\ \hline
+\textbf{Resultados}    & \textbf{Curva}     & \textbf{Mudança de Faixa}     & \textbf{Veículo Parado} & \textbf{Velocidade Constante} \\ \hline
+Verdadeiros Positivos  & 94,89\%            & 75,86\%                       & 100\%                   & 72,1\%                        \\ \hline
+Falsos Positivos       & 7,7\%              & 7,7\%                         & 0\%                     & 26,92\%                       \\ \hline
+Verdadeiros Negativos  & 92,3\%             & 92,3\%                        & 100\%                   & 73,07\%                       \\ \hline
+Falsos Negativos       & 5,11\%             & 24,13\%                       & 0\%                     & 27,9\%                        \\ \hline
+Acurácia               & 95,35\%            & 84,08\%                       & 100\%                   & 72,58\%                       \\ \hline
+\end{tabular}
+}
+\end{table}
+
+O sistema apresentou resultados satisfatórios na detecção de curvas e do veículo parado, obtendo uma acurácia de 95,35\% e 100\% respectivamente. A
+acurácia da detecção de mudança de faixa foi de 84,08\% e foi influenciada pela baixa velocidade do percurso, já que a velocidade angular medida pelo
+giroscópio é influenciada pela velocidade do veículo. Por fim, a acurácia da identificação de velocidade constante foi de 72,58\% e pode ter sido
+influenciada pela dificuldade do motorista em atender a orientação de manter a velocidade constante do veículo devido a imprevistos, como via congestionada,
+outros carros parando bruscamente e pessoas atravessando a rua fora do semáforo. Mais experimentos são necessários para validar esta hipótese. A acurácia total
+do sistema foi de 88\%.
