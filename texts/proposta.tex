@@ -3,10 +3,10 @@
 
 Neste trabalho é proposto um sistema de notificação sensível ao contexto com identificação de momentos oportunos e
 inoportunos para interrupção de motoristas, usando apenas sensores de smartphone. As seções deste capítulo estão
-estruturadas da seguinte forma: A seção \ref{meupossante} apresenta o Meu Possante, um aplicativo para motoristas
-que serviu como motivação para este trabalho. A seção \ref{sec-momentos-oportunos-inoportunos} discorre sobre
-os momentos oportunos e inoportunos escolhidos para a identificação no sistema. A seção \ref{sec-arquitetura-solucao}
-apresenta a arquitetura da solução proposta. A seção \ref{sec-implementacao} mostra detalhes da implementação
+estruturadas da seguinte forma: A Seção \ref{meupossante} apresenta o Meu Possante, um aplicativo para motoristas
+que serviu como motivação para este trabalho. A Seção \ref{sec-momentos-oportunos-inoportunos} discorre sobre
+os momentos oportunos e inoportunos escolhidos para a identificação no sistema. A Seção \ref{sec-arquitetura-solucao}
+apresenta a arquitetura da solução proposta. A Seção \ref{sec-implementacao} mostra detalhes da implementação
 de cada módulo que compõe a solução.
 
 \section{Meu Possante}{}
@@ -52,7 +52,7 @@ como trabalho final da disciplina de Desenvolvimento de Aplicações para Dispos
 Móveis e está em processo refinamento para publicação na Google Play Store.
 
 A tela principal do aplicativo mostra todos os componentes do veículo que são monitorados,
-como pode ser visto na figura \ref{meu-possante-tela-principal}. Ao clicar em um componente,
+como pode ser visto na Figura \ref{meu-possante-tela-principal}. Ao clicar em um componente,
 a tela do mesmo é mostrada, com informações como a frequência de troca e quilometragem
 atual.
 
@@ -68,7 +68,7 @@ pelo motorista enquanto está dirigindo. No momento em que detecta a iminência 
 de alguma das peças do veículo, uma notificação é enviada para o dispositivo do usuário.
 Esta notificação leva à página da peça correspondente no aplicativo, onde pode ser lido
 mais detalhes sobre o estado atual, como a quilometragem e qual a quilometragem da
-próxima troca, como pode ser visto na figura \ref{meu-possante-tela-componente}.
+próxima troca, como pode ser visto na Figura \ref{meu-possante-tela-componente}.
 
 \begin{figure}[h]
 \centering
@@ -117,7 +117,7 @@ Os módulos utilizados são os seguintes:
 \end{enumerate}
 
 A solução proposta no presente trabalho almeja modificar esta arquitetura para que o aplicativo não notifique motoristas
-em momentos inoportunos, evitando colocá-los em potenciais riscos. A próxima seção apresenta os momentos oportunos
+em momentos inoportunos, evitando colocá-los em potenciais riscos. A próxima Seção apresenta os momentos oportunos
 e inoportunos escolhidos para serem identificados.
 
 \section{Momentos oportunos e inoportunos escolhidos}
@@ -211,7 +211,7 @@ Os módulos representados e suas funções são os seguintes:
   momento.
 \end{enumerate}
 
-Na próxima seção são dados mais detalhes sobre os principais módulos implementados na proposta, assim como os algoritmos utilizados.
+Na próxima Seção são dados mais detalhes sobre os principais módulos implementados na proposta, assim como os algoritmos utilizados.
 
 \section{Implementação}
 \label{sec-implementacao}
@@ -251,7 +251,7 @@ Velocidade constante e menor do que 29,5 km/h & Velocidade e aceleração       
 \end{tabular}
 \end{table}
 
-Mais informações sobre os referidos momentos podem ser lidas na seção \ref{sec-momentos-oportunos-inoportunos}.
+Mais informações sobre os referidos momentos podem ser lidas na Seção \ref{sec-momentos-oportunos-inoportunos}.
 
 Dois métodos importantes deste módulo são o \lstinline[basicstyle=\ttfamily\color{black}]|isAccelerating()|, que retorna um valor
 booleano que julga se o veículo está acelerando ou não, e o método \lstinline[basicstyle=\ttfamily\color{black}]|getLastSpeed()|, que
@@ -281,7 +281,7 @@ estes dois momentos inoportunos foi desenvolvido por \citeonline{chen2015invisib
 \citeonline{chen2015invisible} relatam em seu trabalho que quando um carro muda de direção (ex: ao mudar de faixa, fazer uma curva ou passar
 por rodovias sinuosas), o eixo Z do giroscópio pode ser usado para representar a velocidade angular do veículo para aquela mudança de direção.
 Eles também perceberam que o padrão das leituras deste eixo se repete para determinadas atividades, como curvas e mudanças de faixa, como pode
-ser visto na figura \ref{leituras-giroscopio}.
+ser visto na Figura \ref{leituras-giroscopio}.
 
 \begin{figure}[h]
 \centering
@@ -290,7 +290,7 @@ ser visto na figura \ref{leituras-giroscopio}.
 \label{leituras-giroscopio}
 \end{figure}
 
-Pode-se observar na figura \ref{leituras-giroscopio} que as curvas são caracterizadas por uma alteração nas leituras, sendo esta positiva ou negativa,
+Pode-se observar na Figura \ref{leituras-giroscopio} que as curvas são caracterizadas por uma alteração nas leituras, sendo esta positiva ou negativa,
 a depender do sentido da curva; enquanto que a mudança de faixa caracteriza-se por duas alterações sequenciais, sendo a segunda no sentido inverso
 da primeira.
 
@@ -307,7 +307,7 @@ Através de testes e experimentos, os valores ideais encontrados por \citeonline
 $\delta_{h}$ = 0.07 rad/s e $T_{BUMP}$ = 1.5 segundos.
 
 Considerando estas regras para o que é considerada uma alteração válida, \citeonline{chen2015invisible} desenvolveram um algoritmo baseado em mudança de estados
-que tenta identificar quando o veículo está fazendo uma curva ou mudança de faixa. O algoritmo está representado na figura \ref{algoritmo-giroscopio}.
+que tenta identificar quando o veículo está fazendo uma curva ou mudança de faixa. O algoritmo está representado na Figura \ref{algoritmo-giroscopio}.
 
 \begin{figure}[h]
   \centering
