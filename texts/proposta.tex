@@ -117,7 +117,7 @@ Os módulos utilizados são os seguintes:
 \end{enumerate}
 
 A solução proposta no presente trabalho almeja modificar esta arquitetura para que o aplicativo não notifique motoristas
-em momentos inoportunos, evitando colocá-los em potenciais riscos. A próxima Seção apresenta os momentos oportunos
+em momentos inoportunos, evitando colocá-los em potenciais riscos. A próxima seção apresenta os momentos oportunos
 e inoportunos escolhidos para serem identificados.
 
 \section{Momentos oportunos e inoportunos escolhidos}
@@ -193,7 +193,7 @@ imagem representam o sentido do fluxo de dados.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.85\textwidth]{images/arquitetura-meu-possante-com-modulo.png}
-\caption{Arquitetura do Meu Possante após a implementação do módulo de identificação}
+\caption{Visão geral do Meu Possante após a implementação do módulo de identificação.}
 \label{arquitetura-meu-possante-com-modulo}
 \end{figure}
 
@@ -204,9 +204,9 @@ Os módulos representados e suas funções são os seguintes:
   aceleração do dispositivo.
   \item \textbf{Gyroscope Service:} Responsável pela coleta e monitoramento dos dados do giroscópio. Este serviço detecta mudanças
   nos valores do sensor e aplica o algoritmo de detecção de curvas e mudanças de faixa.
-  \item \textbf{Service Handler:} Responsável pela inicialização e checagem de dados dos serviços
-  que estão rodando na aplicação. Este módulo também é responsável por atualizar as informações
-  de quilometragem no banco de dados e chamar o módulo de notificação quando necessário.
+  \item \textbf{Service Handler:} Responsável pela inicialização e checagem de dados dos serviços que estão rodando na aplicação.
+  Este módulo também é responsável por atualizar as informações de quilometragem no banco de dados e chamar o módulo de notificação
+  quando necessário.
   \item \textbf{Notification Handler:} Responsável por consultar os serviços e decidir se deve criar uma notificação ou não naquele
   momento.
 \end{enumerate}
@@ -290,9 +290,9 @@ ser visto na Figura \ref{leituras-giroscopio}.
 \label{leituras-giroscopio}
 \end{figure}
 
-Pode-se observar na Figura \ref{leituras-giroscopio} que as curvas são caracterizadas por uma alteração nas leituras, sendo esta positiva ou negativa,
-a depender do sentido da curva; enquanto que a mudança de faixa caracteriza-se por duas alterações sequenciais, sendo a segunda no sentido inverso
-da primeira.
+Os gráficos (a) e (b) na Figura \ref{leituras-giroscopio} mostram a alteração nas leituras do giroscópio durante uma curva; esta alteração pode ser positiva ou negativa,
+a depender do sentido da curva. Os gráficos (c) e (d) demonstram que a mudança de faixa caracteriza-se por duas alterações sequenciais na leitura do giroscópio,
+sendo a segunda no sentido inverso da primeira.
 
 Observando estes padrões, \citeonline{chen2015invisible} desenvolveram um conjunto de regras que determina se a alteração nas leituras do eixo Z do
 giroscópio pode ser considerada um indicador de curva ou mudança de faixa. As regras são as seguintes:
